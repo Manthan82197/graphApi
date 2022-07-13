@@ -1,12 +1,24 @@
 import express from 'express'
 import {add_new_student,delete_student,get_all_students,update_student} from '../Middlewares/Methods.js'
 
-const Router = express()
+const router = express.Router()
 
-Router.get('/',get_all_students)
+router.get('/',get_all_students)
 
-Router.post('/',add_new_student)
-Router.put('/:id',update_student)
-Router.delete('/:id',delete_student)
+router.post('/',add_new_student ,(req,res)=>{
+    res.json({"message":"new"}).send()
+    
 
-export default Router
+})
+router.put('/:id',update_student,(req,res)=>{
+    res.json({"message":"updated"}).send()
+    
+
+})
+router.delete('/:id',delete_student,(req,res)=>{
+    res.json({"message":"delete"}).send()
+    
+
+})
+
+export default router
