@@ -1,7 +1,6 @@
 import Student from '../Schema/Schema.js'
 export const add_new_student = async (req,res,next) =>{
    const {Name,Roll_No,Class,Division} = req.body
-  console.log(req.body)
    try{
     
     const new_student = new Student({
@@ -10,10 +9,8 @@ export const add_new_student = async (req,res,next) =>{
       Class:Class,
       Division:Division
     })
-    console.log(req.body)
 
     new_student.save()
-    console.log(req.body)
    next()
   }
   catch(error){
@@ -65,5 +62,23 @@ export const update_student = async (req,res,next)=>{
   catch(err){
     console.log(err)
 
+  }
+}
+
+export const get_single_student = async (req,res,next) =>{
+  const id = req.params.id
+  try{
+    const student = await Student.findById(id)
+    console.log(id)
+    if(student){
+      res.data = student
+      next()
+    }else{
+      res.json({"message":"the student requested to search is not present in the database"}).status(500).send()
+    }
+  }
+  catch(err){
+  console.log(err)
+  res.json({'error':"invalid id"})
   }
 }
