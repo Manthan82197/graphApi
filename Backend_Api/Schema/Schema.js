@@ -1,5 +1,5 @@
-import  mongoose from 'moongose'
-var schema  = mongoose.schema
+import  mongoose from 'mongoose'
+var schema  = mongoose.Schema
 
 const student = new schema({
 

@@ -23,12 +23,17 @@ export const add_new_student = async (req,res,next) =>{
 
 
 
-export const delete_student =async (req,res,next) =>{
+export const delete_student = async (req,res,next) =>{
   const id = req.params.id
   console.log(id)
   try{
-   await Student.findByIdAndDelete(id)
-  next()
+    const student = await Student.findById(id)
+     if(student){
+      await Student.findByIdAndDelete(id)
+     next()}
+     else{
+       res.json({"message":"the student is not present in the database"}).status(500).send()
+     }
   }catch(error){
   console.log(error)
   }
@@ -44,12 +49,18 @@ export const get_all_students =async (req,res,next) =>{
   }
 }
 
-export const update_student =async(req,res,next)=>{
+export const update_student = async (req,res,next)=>{
   const {Class,Roll_No} = req.body
   const id = req.params.id
   try{
-    await Student.findByIdAndUpdate(id,{Class:Class,Roll_No:Roll_No}) 
+    const student = await Student.findById(id)
+    if(student){
+      await Student.findByIdAndUpdate(id,{Class:Class,Roll_No:Roll_No}) 
       next()
+    }
+      else{
+        res.json({"message":"the student you are trying to update is not present in the system"}).status(500).send()
+      }
   }
   catch(err){
     console.log(err)
